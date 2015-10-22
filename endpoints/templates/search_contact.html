@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form class="form-search-url" style="max-width: 90%" action="" method="POST">
+    <h2 class="sub-header">Search Contacts</h2>
+        <br/>
+        
+    {% csrf_token %}
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-10  ">
+                <input placeholder="Enter * to list all" class="form-control" id="id_search"  cols="40" maxlength="30" name="search_string" type="text" />
+            </div >
+            
+            <input class="btn btn-primary" type="submit" value="Search"/>
+            
+        </div>
+    </div>
+
+        <br/>
+        
+    <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Matched Contacts</th><th></th>
+            </tr>
+          </thead>
+          
+          <tbody>
+          {% if contacts %}
+                {% for contact in contacts %}
+                <tr>
+                  <td>{{contact.email}}</td><td>{{contact.first_name}}</td><td>{{contact.last_name}}</td>
+                </tr>
+                {% endfor %}
+          {% else %}
+                <tr>
+                  <td>No matches found</td><td></td><td></td>
+                </tr>
+          {% endif %}		
+          </tbody>
+        </table>
+    </div>
+</form>
+
+{% endblock %}

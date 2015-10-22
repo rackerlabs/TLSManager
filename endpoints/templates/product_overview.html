@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="form-horizontal">
+      <form class="form-add-url" style="max-width: 90%">
+        <h2 class="form-add-url-heading">Product Summary</h2>
+            <br/>
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="panel panel-default">
+						<table id="product_report"
+							   class="table-responsive tablesorter-bootstrap table table-bordered table-condensed table-striped table-hover">
+							<tr>
+								<th class="product_name">Product Name</th>
+								<th class="product_score">Lowest Current Score</th>
+							</tr>
+							{% for product in product_scores %}
+							<tr>
+								<td class="product_name"><a href='/product/{{product.endpoint__product__id}}'>{{product.endpoint__product__name}}</a></td>
+								<td class="product_score">{{product.score__max}}</td>
+							</tr>
+							{% endfor %}
+						</table>
+					</div>
+                </div>
+            </div>
+      </form>
+    </div> 
+
+{% endblock %}

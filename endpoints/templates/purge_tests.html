@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="form-horizontal">
+
+        <form method='POST' action='' style="max-width: 90%" class="form-purge-tests" >
+            <h2 class="form-purge-tests-heading">Enter Purge Criteria</h2>
+
+    {% csrf_token %}
+    {% if errors %}
+        <ul>
+            {% for error in errors %}
+            <li><p class="text-danger">{{ error }}</p></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+            <br/>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                               for="id_name">Older than</label>
+                    <div class="col-sm-10  ">
+                        <select class="form-control" id="id_product" name="product">
+                                <option value="1">1 Week</option>
+                                <option value="1">1 Month</option>
+                                <option value="1">1 Quarter</option>
+                                <option value="1">6 Months</option>
+                                <option value="1">1 Year</option>
+                                <option value="1">2 Years</option>
+                        </select>
+                    </div>
+                </div>
+            
+            <br/>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                               for="id_contacts">Product Name</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="id_product" name="product">
+                            {% for product in products %}
+                                <option value="{{ product.id }}">{{ product.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+            <br/>
+
+        <div class="form-group">
+                <label class="col-sm-2 control-label"
+                       for="id_prod_type">Purge Score Threshold:</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="id_score" name="scan_score_threshold">
+                <option value="A" {% ifequal config.scan_score_threshold 'A' %}selected="selected"{% endifequal %}>A</option>
+                <option value="A-" {% ifequal config.scan_score_threshold 'A-' %}selected="selected"{% endifequal %}>A-</option>
+                <option value="B" {% ifequal config.scan_score_threshold 'B' %}selected="selected"{% endifequal %}>B</option>
+                <option value="C" {% ifequal config.scan_score_threshold 'C' %}selected="selected"{% endifequal %}>C</option>
+                <option value="M" {% ifequal config.scan_score_threshold 'M' %}selected="selected"{% endifequal %}>M</option>
+                <option value="N" {% ifequal config.scan_score_threshold 'N' %}selected="selected"{% endifequal %}>N</option>
+                <option value="F" {% ifequal config.scan_score_threshold 'F' %}selected="selected"{% endifequal %}>F</option>
+                </select>
+            </div>
+        </div>
+
+            <br/>
+            
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type='submit' value='Purge' class='btn btn-primary' />
+                    </div>
+                </div>
+        
+        </form>
+
+    </div>
+
+
+{% endblock %}

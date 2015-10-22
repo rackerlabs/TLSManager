@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="form-horizontal">
+      <form class="form-add-url" style="max-width: 90%">
+        <h2 class="form-add-url-heading">Certs About to Expire Report</h2>
+          <br/>
+
+          <div class="row">
+            <div class="col-md-9">
+                <div class="panel panel-default">
+                    <table class="table-responsive tablesorter-bootstrap table table-bordered table-condensed table-striped table-hover">
+                        <tr>
+                          <th>URL</th>
+                          <th style="text-align: center;">Days until Expiration</th>
+                        </tr>
+                        {% for url, days in about_to_expire_endpoints.items %}
+                        <tr>
+                            <td>{{ url }}</td>
+                            {% if days < 30 %}
+                            <td align="center">{{ days }}</td>
+                            {% else %}
+                                {% if days < 60 %}
+                                <td align="center">{{ days }}</td>
+                                {% else %}
+                                <td align="center">{{ days }}</td>
+                                {% endif %}
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+          </div>
+
+      </form>
+
+    </div> 
+
+{% endblock %}

@@ -1,0 +1,169 @@
+<div style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;">
+    {% ifequal about_to_expire_endpoints|length 0 %}
+    {% else %}
+    <div>
+          <h2>Certs About to Expire</h2>
+          <div>
+            <table style="border:1px solid #0000CD;border-collapse:collapse;">
+              <thead>
+                <tr>
+                  <th style="background-color:#87CEEB; border-width:1px; border:1px solid #0000CD;">URL</th>
+                  <th style="background-color:#87CEEB; border-width:1px; border:1px solid #0000CD;">Days until Expiration</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for url, days in about_to_expire_endpoints.items %}
+                <tr>
+                    <td style="border:1px solid #0000CD;">{{ url }}</td>
+                    {% if days < 30 %}
+                    <td style="background-color: #FFBE81; border:1px solid #0000CD; text-align:center;">{{ days }}</td>
+                    {% else %}
+                        {% if days < 60 %}
+                        <td style="background-color: #F7BE81; border:1px solid #0000CD; text-align:center;">{{ days }}</td>
+                        {% else %}
+                        <td style="border:1px solid #0000CD; text-align:center;">{{ days }}</td>
+                        {% endif %}
+                    {% endif %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+    </div>
+    <br/>
+    <br/>
+    {% endifequal %}
+
+    <div>
+          <h2>URLs with Failing TLS Scores</h2>
+          <div>
+            <table style="border:1px solid #0000CD;border-collapse:collapse;">
+              <thead>
+                <tr>
+                  <th style="background-color: #87CEEB;border-width: 1px; border:1px solid #0000CD;">URL Tested</th>
+                  <th style="background-color: #87CEEB;border-width: 1px; border:1px solid #0000CD;">Product</th>
+                  <th style="background-color: #87CEEB;border-width: 1px; border:1px solid #0000CD;">Date Scanned</th>
+                  <th style="background-color: #87CEEB;border-width: 1px; border:1px solid #0000CD;">Score</th>
+                  <th style="background-color: #87CEEB;border-width: 1px; border:1px solid #0000CD;">Previous Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for endpoint_tr in endpoint_tr_tuples %}
+                <tr>
+                    <td style="border:1px solid #0000CD;">{{endpoint_tr.0.url}}</td>
+                    <td style="border:1px solid #0000CD;">{{endpoint_tr.0.product.name}}</td>
+                    <td style="border:1px solid #0000CD;">{{endpoint_tr.1.time}}</td>
+                    {% if endpoint_tr.1.score > endpoint_tr.2.score %} <!-- score was downgraded. highlight background -->
+                        {% ifequal endpoint_tr.1.score 'B' %}
+                            <td style="background-color: #F7BE81; border:1px solid #0000CD;" align="center"><font color="#808000">{{endpoint_tr.1.score}}</font></td>
+                        {% endifequal %}
+                        {% ifequal endpoint_tr.1.score 'C' %}
+                            <td style="background-color: #F7BE81; border:1px solid #0000CD;" align="center"><font color="#DA70D6">{{endpoint_tr.1.score}}</font></td>
+                        {% endifequal %}
+                        {% ifequal endpoint_tr.1.score 'D' %}
+                            <td style="background-color: #F7BE81; border:1px solid #0000CD;" align="center"><font color="#FFA500">{{endpoint_tr.1.score}}</font></td>
+                        {% endifequal %}
+                        {% ifequal endpoint_tr.1.score 'F' %}
+                            <td style="background-color: #F7BE81; border:1px solid #0000CD;" align="center"><font color="red">{{endpoint_tr.1.score}}</font></td>
+                        {% endifequal %}
+                    {% else %} <!-- score was upgraded or remained the same -->
+                        {% ifequal endpoint_tr.1.score 'B' %}
+                            <td style="border:1px solid #0000CD;" align="center"><font color="#808000">{{endpoint_tr.1.score}}</font></td>
+                        {% endifequal %}
+                        {% ifequal endpoint_tr.1.score 'C' %}
+                            <td style="border:1px solid #0000CD;" align="center"><font color="#DA70D6">{{endpoint_tr.1.score}}</font></td>
+                        {% endifequal %}
+                        {% ifequal endpoint_tr.1.score 'D' %}
+                            <td style="border:1px solid #0000CD;" align="center"><font color="#FFA500">{{endpoint_tr.1.score}}</font></td>
+                        {% endifequal %}
+                        {% ifequal endpoint_tr.1.score 'F' %}
+                            <td style="border:1px solid #0000CD;" align="center"><font color="red">{{endpoint_tr.1.score}}</font></td>
+                        {% endifequal %}
+                    {% endif %}
+                    
+                    {% ifequal endpoint_tr.2.score 'B' %}
+                        <td style="border:1px solid #0000CD;" align="center"><font color="#808000">{{endpoint_tr.2.score}}</font></td>
+                    {% endifequal %}
+                    {% ifequal endpoint_tr.2.score 'C' %}
+                        <td style="border:1px solid #0000CD;" align="center"><font color="#DA70D6">{{endpoint_tr.2.score}}</font></td>
+                    {% endifequal %}
+                    {% ifequal endpoint_tr.2.score 'D' %}
+                        <td style="border:1px solid #0000CD;" align="center"><font color="#FFA500">{{endpoint_tr.2.score}}</font></td>
+                    {% endifequal %}
+                    {% ifequal endpoint_tr.2.score 'F' %}
+                        <td style="border:1px solid #0000CD;" align="center"><font color="red">{{endpoint_tr.2.score}}</font></td>
+                    {% endifequal %}
+                    {% if not endpoint_tr.2.score %}
+                        <td style="border:1px solid #0000CD;" align="center"><font color="red">&nbsp;</font></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+    </div>
+    <br/>
+    <br/>
+
+    <div>
+        <h2>Summary Report</h2>
+            <div>
+                <div>
+                        <div>
+                            <table  style="border:1px solid #0000CD;border-collapse:collapse;">
+                                <tr>
+                                    <th style="background-color: #87CEEB;border-width: 1px; border:1px solid #0000CD;">&nbsp;&nbsp;Score&nbsp;&nbsp;</th>
+                                    <th style="background-color: #87CEEB;border-width: 1px; border:1px solid #0000CD;">&nbsp;&nbsp;Total URLs&nbsp;&nbsp;</th>
+                                </tr>
+                                
+                                <tr>
+                                    <td style="border:1px solid #0000CD;" align="center">A+</td>
+                                    <td style="border:1px solid #0000CD;" align="center">{{score_count.Aplus}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid #0000CD;" align="center">A</td>
+                                    <td style="border:1px solid #0000CD;" align="center">{{score_count.A}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid #0000CD;" align="center">A-</td>
+                                    <td style="border:1px solid #0000CD;" align="center">{{score_count.Aminus}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid #0000CD;" align="center">B</td>
+                                    <td style="border:1px solid #0000CD;" align="center">{{score_count.B}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid #0000CD;" align="center">C</td>
+                                    <td style="border:1px solid #0000CD;" align="center">{{score_count.C}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid #0000CD;" align="center">D</td>
+                                    <td style="border:1px solid #0000CD;" align="center">{{score_count.D}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid #0000CD;" align="center">E</td>
+                                    <td style="border:1px solid #0000CD;" align="center">{{score_count.E}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid #0000CD;" align="center">M</td>
+                                    <td style="border:1px solid #0000CD;" align="center">{{score_count.M}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid #0000CD;" align="center">N</td>
+                                    <td style="border:1px solid #0000CD;" align="center">{{score_count.N}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid #0000CD;" align="center">T</td>
+                                    <td style="border:1px solid #0000CD;" align="center">{{score_count.T}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid #0000CD;" align="center">F</td>
+                                    <td style="border:1px solid #0000CD;" align="center">{{score_count.F}}</td>
+                                </tr>
+                                
+                            </table>
+                        </div>
+                </div>
+            </div>
+    </div> 
+</div>

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form class="form-search-url" style="max-width: 90%" action="" method="POST" id="id_test_results">
+          <h2 class="sub-header">TLS Test Results</h2>
+    
+    {% csrf_token %}
+    {% if errors %}
+        <ul>
+            {% for error in errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
+    
+    <table class="table table-striped">
+      <thead>
+        <tr>
+		  {% ifequal current_sort_order 'url' %}
+          <th><input class="btn btn-default btn-xs btn-block" type="submit" name="url" value="URL Tested"/></th>
+		  {% else %}
+          <th><input class="btn btn-info btn-xs btn-block" type="submit" name="url" value="URL Tested"/></th>
+		  {% endifequal %}
+		  {% ifequal current_sort_order 'product' %}
+          <th><input class="btn btn-default btn-xs btn-block" type="submit" name="product" value="Product"/></th>
+		  {% else %}
+          <th><input class="btn btn-info btn-xs btn-block" type="submit" name="product" value="Product"/></th>
+		  {% endifequal %}
+		  {% ifequal current_sort_order 'last_scan_date' %}
+          <th><input class="btn btn-default btn-xs btn-block" type="submit" name="last_scan_date" value="Last Scan Date"/></th>
+		  {% else %}
+          <th><input class="btn btn-info btn-xs btn-block" type="submit" name="last_scan_date" value="Last Scan Date"/></th>
+		  {% endifequal %}
+		  {% ifequal current_sort_order 'score' %}
+          <th><input class="btn btn-default btn-xs btn-block" type="submit" name="score" value="Score"/></th>
+		  {% else %}
+          <th><input class="btn btn-info btn-xs btn-block" type="submit" name="score" value="Score"/></th>
+		  {% endifequal %}
+          <!-- th><a href="#" onclick="document.getElementById('id_test_results').submit();">URL Tested</a></th>
+          <th><a href="#" onclick="document.getElementById('id_test_results').submit();">Product</a></th>
+          <th><a href="#" onclick="document.getElementById('id_test_results').submit();">Last Scan Date</a></th>
+          <th><a href="#" onclick="document.getElementById('id_test_results').submit();">Score</a></th -->
+          <th></th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        {% for endpoint_tr in endpoint_tr_tuples %}
+                  
+                    {% if endpoint_tr.1 == None %}
+                            <tr>
+                                <td>{{endpoint_tr.0.url}}</td>
+                                <td>{{endpoint_tr.0.product.name}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td></tr>
+                    {% else %}
+                            <tr>
+                                <td>{{endpoint_tr.0.url}}</td>
+                                <td>{{endpoint_tr.0.product.name}}</td>
+                                <td>{{endpoint_tr.1.time}}</td>
+								{% ifequal endpoint_tr.1.score 'F' %}
+                                <td align="center"><b><font color="red">{{endpoint_tr.1.score}}</font></b></td>
+								{% else %}
+                                <td align="center">{{endpoint_tr.1.score}}</td>
+								{% endifequal %}
+                                <td><a  class="btn btn-default btn-xs" href="/testDetails/{{endpoint_tr.1.id}}/{{page_to_display}}">Details</a></td></tr>
+                    {% endif %}
+                      
+            
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <input class="form-control" id="id_page_2_display"  cols="4" maxlength="2" name="page_to_display" type="hidden" value="{{page_to_display}}" />
+    <input class="form-control" id="id_sort_order"  cols="4" maxlength="2" name="current_sort_order" type="hidden" value="{{current_sort_order}}" />
+    
+    {% if first_page %}{% else %}
+    <input class="btn btn-primary" type="submit" name="page_direction" value="Previous"/>
+    {% endif %}
+    {% if last_page %}{% else %}
+    <input class="btn btn-primary" type="submit" name="page_direction" value="Next"/>
+    {% endif %}
+
+</form>
+
+{% endblock %}

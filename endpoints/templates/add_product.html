@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="form-horizontal">
+
+        <form method='POST' action='' style="max-width: 90%" class="form-add-product" >
+            <h2 class="form-add-product-heading">Enter Product Details</h2>
+
+    {% csrf_token %}
+    {% if errors %}
+        <ul>
+            {% for error in errors %}
+            <li><p class="text-danger">{{ error }}</p></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+            <br/>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                               for="id_name">Product Name</label>
+                    <div class="col-sm-10  ">
+                        <input class="form-control" id="id_name" maxlength="60" name="name" type="text" value="{{name}}"/>
+                    </div>
+                </div>
+            
+            <br/>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                               for="id_contacts">Contacts</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="id_contacts" name="contacts">
+                            {% for contact in contacts %}
+                                <option value="{{ contact.id }}">{{ contact.email }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            
+            <br/>
+            
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type='submit' value='Add Product' class='btn btn-primary' />
+                    </div>
+                </div>
+        
+        </form>
+
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="form-horizontal">
+
+      <form class="form-change-url" style="max-width: 90%">
+        <h2 class="form-change-url-heading">Change Details</h2>
+{% csrf_token %}
+{% if form.errors %}
+    {{ form.errors }}
+{% endif %}
+
+            <br/>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label"
+                       for="id_endpoints">URL</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="id_urls" name="urls" onchange="populateChangeURLForm(this)">
+                        <option value="" selected="selected" >Please select</option>
+				    {% for endpoint in endpoints %}
+                        <option value="{{endpoint.id}}">{{endpoint.url}}</option>
+				    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+            <br/>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label"
+                       for="id_prod_manager">Product&nbsp;Name</label>
+            <div class="col-sm-10  ">
+                <input class="form-control" id="id_prod_name"  cols="40" maxlength="30" name="product_name" type="text" />
+            </div>
+        </div>
+
+            <br/>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label"
+                       for="id_prod_manager">Contact&nbsp;Email</label>
+            <div class="col-sm-10  ">
+                <input class="form-control" id="id_email"  cols="40" maxlength="30" name="email" type="text" />
+            </div>
+        </div>
+
+            <br/>
+
+        <div class="form-group">
+                <label class="col-sm-2 control-label"
+                       for="id_prod_type">Check&nbsp;Frequency</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="id_frequency" name="check_frequency">
+                <option value="1">Daily</option>
+                <option value="2">Every 2 days</option>
+                <option value="3">Weekly</option>
+                <option value="4">Monthly</option>
+                <option value="5">Quarterly</option>
+                <option value="6">Yearly</option>
+                </select>
+            </div>
+        </div>
+
+            <br/>
+
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input class="btn btn-primary" type="button" value="Change"/>&nbsp;&nbsp;&nbsp;
+                <input class="btn btn-primary" type="button" value="Delete" onclick="confirmURLDelete();"/>
+                <input type="hidden" id="save_endpoint_id" name="endpoint_id" value="__filled_by_javascript_after_endpoint_dropdown_is_selected_" />
+            </div>
+        </div>
+
+      </form>
+
+    </div> <!-- /container -->
+
+{% endblock %}

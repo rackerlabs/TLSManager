@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form class="form-search-url" style="max-width: 90%" action="" method="POST">
+    <h2 class="sub-header">Search URLs</h2>
+    
+    {% csrf_token %}
+    {% if errors %}
+        <ul>
+            {% for error in errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
+            <br/>
+    
+    <div class="form-group">
+		<div class="row">
+            <div class="col-sm-10  ">
+                <input placeholder="Enter * to list all" class="form-control" id="id_search"  cols="40" maxlength="60" name="search_string" type="text" value="{{search_string|escape}}"/>
+            </div >
+            
+            <input class="btn btn-primary" type="submit" value="Search"/>
+            
+		</div>
+    </div>
+
+            <br/>
+			
+    
+	<table class="table table-striped">
+	  <thead>
+		<tr>
+		  <th>Matched URLs</th>
+		  <th></th>
+		</tr>
+	  </thead>
+	  
+	  <tbody>
+	  {% if endpoints %}
+			{% for endpoint in endpoints %}
+			<tr>
+			  <td>{{endpoint.url|escape}}</td><td><input class="btn btn-xs btn-primary" type="button" onclick="submitForScan('{{endpoint.id}}');" name="{{endpoint.id}}" value="Scan Now"/></td>
+			</tr>
+			{% endfor %}
+	  {% else %}
+			<tr>
+			  <td>No matches found</td><td></td>
+			</tr>
+	  {% endif %}		
+	  </tbody>
+	</table>
+	
+	<input class="form-control" id="id_page1"  cols="4" maxlength="2" name="page_to_display" type="hidden" value="{{page_to_display}}" />
+	
+	{% if first_page %}{% else %}
+	<input class="btn btn-primary" type="submit" name="page_direction" value="Previous"/>
+	{% endif %}
+	{% if last_page %}{% else %}
+	<input class="btn btn-primary" type="submit" name="page_direction" value="Next"/>
+	{% endif %}
+    
+</form>
+
+{% endblock %}

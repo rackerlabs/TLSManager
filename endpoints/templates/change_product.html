@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="form-horizontal">
+
+        <form method='POST' action='' style="max-width: 90%" class="form-add-contact" >
+            <h2 class="form-add-contact-heading">Change Product Details</h2>
+
+            {% csrf_token %}
+            {% if errors %}
+                <ul>
+                    {% for error in errors %}
+                    <li><p class="text-danger">{{ error }}</p></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <br/>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                               for="id_firstname">Product Name</label>
+                    <div class="col-sm-10  ">
+                        <select class="form-control" id="id_products" name="products" onchange="populateChangeProductForm(this)">
+                                <option value="pleaseselect" selected="selected" >Please select</option>
+                            {% for product in products %}
+                                <option value="{{product.id}}">{{product.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            
+            <br/>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                               for="id_contact">Contact</label>
+                    <div class="col-sm-10  ">
+                        <select class="form-control" id="id_contacts" name="contacts" onchange="populateContactForm(this)">
+                                <option value="pleaseselect" selected="selected" >Please select</option>
+                            {% for contact in contacts %}
+                                <option value="{{contact.id}}">{{contact.email}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            
+            <br/>
+            
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type='button' name='buttn' value='Change' class='btn btn-primary'  onclick="changeProduct();"/>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type='button' name='buttn' value='Delete' class='btn btn-primary'  data-href="/deleteProduct?product_id={{product.id}}" data-toggle="modal" data-target="#confirm-delete" onclick="validateProduct({{product.id}});"/>
+                    </div>
+                </div>
+        </form>
+
+
+  
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h5 class="modal-title" id="myModalLabel">Confirm Delete</h5>
+            </div>
+            <div class="modal-body">
+                <h4>Are you sure you want to delete this product?</h4>
+                    <!-- p class="debug-url"></p -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger btn-ok">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>  
+
+    </div>
+
+{% endblock %}

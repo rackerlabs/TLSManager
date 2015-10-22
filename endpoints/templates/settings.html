@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="form-horizontal">
+
+      <form class="form-add-url" style="max-width: 90%" action="/settings" method="POST">
+        <h2 class="form-add-url-heading">Settings</h2>
+    {% csrf_token %}
+    {% if errors %}
+        <ul>
+            {% for error in errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+            <br/>
+
+        <div class="form-group">
+            <label class="col-sm-4 control-label"
+                       for="id_prod_manager">Default&nbsp;Contact&nbsp;Email</label>
+            <div class="col-sm-8  ">
+				<select class="form-control" id="id_emails" name="default_email">
+						<option value="pleaseselect" selected="selected" >Please select</option>
+					{% for contact in contacts %}
+						<option value="{{contact.email}}"  {% ifequal config.default_email contact.email %}selected="selected"{% endifequal %}>{{contact.email}}</option>
+					{% endfor %}
+				</select>
+            </div>
+        </div>
+
+            <br/>
+
+        <div class="form-group">
+                <label class="col-sm-4 control-label"
+                       for="id_prod_type">Scan Enabled:</label>
+            <div class="col-sm-8">
+                <select class="form-control" id="id_enabled" name="scan_enabled">
+                <option value="True" {% ifequal config.scan_enabled 1 %}selected="selected"{% endifequal %}>True</option>
+                <option value="False" {% ifequal config.scan_enabled 0 %}selected="selected"{% endifequal %}>False</option>
+                </select>
+            </div>
+        </div>
+
+            <br/>
+
+        <div class="form-group">
+                <label class="col-sm-4 control-label"
+                       for="id_prod_type">Scan&nbsp;Frequency&nbsp;&nbsp;:</label>
+            <div class="col-sm-8">
+                <select class="form-control" id="id_frequency" name="scan_frequency">
+                <option value="Daily" {% ifequal config.default_scan_frequency 1 %}selected="selected"{% endifequal %}>Daily</option>
+                <option value="Every_2_days" {% ifequal config.default_scan_frequency 2 %}selected="selected"{% endifequal %}>Every 2 days</option>
+                <option value="Weekly" {% ifequal config.default_scan_frequency 3 %}selected="selected"{% endifequal %}>Weekly</option>
+                <option value="Monthly" {% ifequal config.default_scan_frequency 4 %}selected="selected"{% endifequal %}>Monthly</option>
+                <option value="Quarterly" {% ifequal config.default_scan_frequency 5 %}selected="selected"{% endifequal %}>Quarterly</option>
+                <option value="Yearly" {% ifequal config.default_scan_frequency 6 %}selected="selected"{% endifequal %}>Yearly</option>
+                </select>
+            </div>
+        </div>
+
+            <br/>
+
+        <div class="form-group">
+                <label class="col-sm-4 control-label"
+                       for="id_prod_type">Scan Score Threshold:</label>
+            <div class="col-sm-8">
+                <select class="form-control" id="id_frequency" name="scan_score_threshold">
+                <option value="A" {% ifequal config.scan_score_threshold 'A' %}selected="selected"{% endifequal %}>A</option>
+                <option value="A-" {% ifequal config.scan_score_threshold 'A-' %}selected="selected"{% endifequal %}>A-</option>
+                <option value="B" {% ifequal config.scan_score_threshold 'B' %}selected="selected"{% endifequal %}>B</option>
+                <option value="C" {% ifequal config.scan_score_threshold 'C' %}selected="selected"{% endifequal %}>C</option>
+                <option value="M" {% ifequal config.scan_score_threshold 'M' %}selected="selected"{% endifequal %}>M</option>
+                <option value="N" {% ifequal config.scan_score_threshold 'N' %}selected="selected"{% endifequal %}>N</option>
+                <option value="F" {% ifequal config.scan_score_threshold 'F' %}selected="selected"{% endifequal %}>F</option>
+                </select>
+            </div>
+        </div>
+
+            <br/>
+
+        <div class="form-group">
+            <label class="col-sm-4 control-label"
+                       for="id_prod_manager">Automatically Purge Old Tests</label>
+            <div class="col-sm-8">
+                <select class="form-control" id="id_frequency" name="auto_purge">
+                <option value="1" {% ifequal config.auto_purge 1 %}selected="selected"{% endifequal %}>True</option>
+                <option value="0" {% ifequal config.auto_purge 0 %}selected="selected"{% endifequal %}>False</option>
+                </select>
+            </div>
+        </div>
+
+            <br/>
+
+        <div class="form-group">
+            <label class="col-sm-4 control-label"
+                       for="id_prod_manager">Retention Period (if automated purge is selected)</label>
+            <div class="col-sm-8">
+                <select class="form-control" id="id_frequency" name="test_retention_period">
+                <option value="1_Month" {% ifequal config.test_retention_period 1 %}selected="selected"{% endifequal %}>1 Month</option>
+                <option value="1_Quarter" {% ifequal config.test_retention_period 2 %}selected="selected"{% endifequal %}>1 Quarter</option>
+                <option value="1_Year" {% ifequal config.test_retention_period 3 %}selected="selected"{% endifequal %}>1 Year</option>
+                <option value="Forever" {% ifequal config.test_retention_period 4 %}selected="selected"{% endifequal %}>Forever</option>
+                </select>
+            </div>
+        </div>
+
+            <br/>
+
+
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-8">
+                <input class="btn btn-primary" type="submit" value="Save"/>
+            </div>
+        </div>
+
+      </form>
+
+    </div> <!-- /container -->
+
+{% endblock %}

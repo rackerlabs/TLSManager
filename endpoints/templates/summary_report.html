@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="form-horizontal">
+      <form class="form-add-url" style="max-width: 90%">
+        <h2 class="form-add-url-heading">Summary Report</h2>
+            <br/>
+
+            <div class="row">
+                <div class="col-md-9">
+                        <div class="panel panel-default">
+                            <table id="summary_report"
+                                   class="table-responsive tablesorter-bootstrap table table-bordered table-condensed table-striped table-hover">
+                                <tr>
+                                    <th class="score">Score</th>
+                                    <th>Total URLs</th>
+                                </tr>
+                                
+                                <tr>
+                                    <td class="score">A+</td>
+                                    <td>{{score_count.Aplus}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="score">A</td>
+                                    <td>{{score_count.A}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="score">A-</td>
+                                    <td>{{score_count.Aminus}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="score">B</td>
+                                    <td>{{score_count.B}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="score">C</td>
+                                    <td>{{score_count.C}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="score">D</td>
+                                    <td>{{score_count.D}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="score">E</td>
+                                    <td>{{score_count.E}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="score">M</td>
+                                    <td>{{score_count.M}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="score">N</td>
+                                    <td>{{score_count.N}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="score">T</td>
+                                    <td>{{score_count.T}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="score">F</td>
+                                    <td>{{score_count.F}}</td>
+                                </tr>
+                                
+                            </table>
+                        </div>
+                </div>
+            </div>
+
+      </form>
+
+    </div> 
+
+{% endblock %}

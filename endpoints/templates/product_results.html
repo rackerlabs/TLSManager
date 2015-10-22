@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+        <h2 class="form-add-url-heading">Endpoints</h2>
+
+<table id="product_endpoint_report" class="table-responsive tablesorter-bootstrap table table-bordered table-condensed table-striped table-hover">
+	<tr>
+		<th class="endpoint_url">URL</th>
+		<th class="testresult_score">Score</th>
+		<th class="testresult_time">Timestamp</th>
+	</tr>
+							   
+{% for endpoint in endpoint_results %}
+	<tr>
+		<td>{{endpoint.url}}</td>
+		<td><a href="/testDetails/{{endpoint.testresult__id}}/1/">{{endpoint.testresult__score}}</a></td>
+		<td><a href="/testDetails/{{endpoint.testresult__id}}/1/">{{endpoint.testresult__time}}</a></td>
+	</tr>
+{% endfor %}
+</table>
+{% endblock %}

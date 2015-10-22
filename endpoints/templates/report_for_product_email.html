@@ -1,0 +1,21 @@
+<div style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;">
+
+    <div>
+          <h2>TLS Test Result for {{url}}</h2>
+            <br/>
+          <h3>Product:  <div style="color:blue">{{product}}</div></h3>
+          <h3>Time:     <div style="color:blue">{{time}}</font></h3>
+          <div>
+            <table style="border:1px solid #0000CD;border-collapse:collapse;">
+              <tbody>
+                {% for defect in defects %}
+                <tr>
+                    <td style="border:1px solid #0000CD;">{{defect.description}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+    </div>
+
+</div>

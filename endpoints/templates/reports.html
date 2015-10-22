@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="form-horizontal">
+      <form class="form-add-url" style="max-width: 90%">
+        <h2 class="form-add-url-heading">Control Report</h2>
+
+            <div class="form-group">
+            <label class="col-sm-2 control-label"
+                       for="xxxx">&nbsp;</label>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-md-9">
+                        <div class="panel panel-default">
+                            <table id="engagements"
+                                   class="table-responsive tablesorter-bootstrap table table-bordered table-condensed table-striped table-hover">
+                                <tr>
+                                    <th class="prod_name">Score</th>
+                                    <th>Total URLs</th>
+                                </tr>
+                                
+                                <tr>
+                                    <td class="prod_name">A+</td>
+                                    <td>34</td>
+                                </tr>
+                                <tr>
+                                    <td class="prod_name">A</td>
+                                    <td>56</td>
+                                </tr>
+                                <tr>
+                                    <td class="prod_name">A-</td>
+                                    <td>23</td>
+                                </tr>
+                                <tr>
+                                    <td class="prod_name">B</td>
+                                    <td>75</td>
+                                </tr>
+                                <tr>
+                                    <td class="prod_name">C</td>
+                                    <td>12</td>
+                                </tr>
+                                <tr>
+                                    <td class="prod_name">F</td>
+                                    <td>27</td>
+                                </tr>
+                                
+                            </table>
+                        </div>
+                </div>
+            </div>
+
+      </form>
+
+    </div> <!-- /container -->
+
+{% endblock %}

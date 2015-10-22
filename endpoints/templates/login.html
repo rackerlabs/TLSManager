@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="form-horizontal">
+
+        <form method='POST' style="max-width: 60%" class="form-login" >
+            <h2 class="form-login-heading">Login</h2>
+
+            {% csrf_token %}
+            {% if errors %}
+                <ul>
+                    {% for error in errors %}
+                    <li><p class="text-danger">{{ error }}</p></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <br/>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                               for="id_username">User Name</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="id_username" maxlength="20" name="username" type="text"/>
+                    </div>
+                </div>
+            
+            <br/>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                               for="id_password">Password</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="id_password" maxlength="30" name="password" type="password"/>
+                    </div>
+                </div>
+            
+            <br/>
+            
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type='submit' name='buttn' value='Login' class='btn btn-primary'/>
+                    </div>
+                </div>
+        </form>
+
+    </div>
+
+{% endblock %}
