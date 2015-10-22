@@ -1,0 +1,16 @@
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+*$py.class
+
+# Django
+django_debug.log
+
+# Make sure we don't check settings.py into git
+settings.py 
+
+# Vim Swapfiles
+*.swp
+*.swo
+
+# Exclude database file
+dev.db
